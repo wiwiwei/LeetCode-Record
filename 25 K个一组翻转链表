@@ -1,0 +1,68 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     public ListNode(int val=0, ListNode next=null) {
+ *         this.val = val;
+ *         this.next = next;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode ReverseKGroup(ListNode head, int k) {
+        if(k==1)
+            return head;
+        ListNode newHead = new ListNode();//头部哨兵,用于结果返回
+        var cur = head;
+        int n = 1;//指针位置下标
+        var pre = new ListNode();
+        var preShaoBing = pre;
+        var newHeadShaobingB = new ListNode();
+        var newHeadShaobingA = new ListNode();
+        newHead.next = newHeadShaobingB;
+        while(cur!=null)//遍历链表
+        {
+            if(n%k!=0)
+            {
+                pre.next = cur;
+                pre = pre.next;
+            }
+            else
+            {
+                newHeadShaobingA = cur.next;
+                var node = new ListNode(cur.val);
+                pre.next = node;
+                pre = pre.next;
+                newHeadShaobingB.next = ReverseList(preShaoBing.next);
+                while(newHeadShaobingB.next!=null)
+                {
+                    newHeadShaobingB = newHeadShaobingB.next;
+                }
+                pre = new ListNode();
+                preShaoBing = pre;
+            }
+            cur = cur.next;
+            n++;
+        }
+        if(newHeadShaobingA!=null&&preShaoBing.next!=null)
+        {
+            newHeadShaobingB.next =newHeadShaobingA;
+        }
+        return newHead.next.next;
+    }
+    
+    private ListNode ReverseList(ListNode head)
+    {
+        ListNode pre = null;
+        ListNode cur = head; 
+        while(cur!=null)
+        {
+            var node = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = node;
+        }
+        return pre;
+    }
+}
