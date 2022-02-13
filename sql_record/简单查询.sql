@@ -42,3 +42,14 @@ AVG(active_days_within_30) as avg_active_day,
 AVG(question_cnt) as avg_question_cnt
 from user_profile
 GROUP BY gender , university
+/* 对于结果条件筛选，使用having */
+SELECT university,
+AVG(question_cnt) as avg_question_cnt,
+AVG(answer_cnt) as avg_answer_cnt
+from user_profile
+GROUP BY university
+HAVING avg_question_cnt<5 or avg_answer_cnt <20
+/*嵌套where查询*/
+select device_id,question_id,result FROM question_practice_detail
+WHERE device_id in
+(SELECT device_id FROM user_profile WHERE university = '浙江大学')
