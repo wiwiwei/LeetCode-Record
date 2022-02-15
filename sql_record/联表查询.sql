@@ -45,3 +45,12 @@ GROUP BY age_cut
 SELECT IF(age<25 OR age IS NULL,'25岁以下','25岁以及上') age_cut,COUNT(device_id) Number
 FROM user_profile
 GROUP BY age_cut
+
+select device_id,gender,
+case
+when age < 20 then '20岁以下'
+when age between 20 and 24 then '20-24岁'
+when age > 24 then '25岁及以上'
+else '其他'
+end as age_cut
+from user_profile
